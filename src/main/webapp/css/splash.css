@@ -1,0 +1,61 @@
+/*-------------------------
+	Simple reset
+--------------------------*/
+
+
+*{
+	margin:0;
+	padding:0;
+}
+
+
+/*-------------------------
+	General Styles
+--------------------------*/
+
+
+html{
+	/* This image will be displayed fullscreen */
+	background:url('../images/rome.jpg') no-repeat center center;
+	
+	/* Ensure the html element always takes up the full height of the browser window */
+	min-height:100%;
+	
+	/* The Magic */
+	background-size:cover;
+}
+
+body{
+	/* Workaround for some mobile browsers */
+	min-height:100%;
+	font-family: overpass, sans-serif; font-size:4vw;
+}
+
+/*----------------------------
+	The Title
+-----------------------------*/
+
+.center-splash {
+	width: 300px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 150px;
+}
+/*----------------------------
+	Using links
+-----------------------------*/
+
+a, a:visited {
+	outline:none;
+	color: #ffffff;
+	text-decoration:none;
+}
+
+a:hover{
+	color: #dddddd;
+}
+
+section, footer, header{
+	display: block;
+}

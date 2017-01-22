@@ -1,0 +1,121 @@
+/*----------------------------
+	Div with space on top to avoid nav bar
+-----------------------------*/
+.homediv {
+	margin-top: 100px;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+hr.dash-two {
+	border: 0;
+	height: 2px;
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+/*----------------------------
+	elements lists formatting
+-----------------------------*/
+.l_uuid {
+	font-weight: bold;
+}
+.l_desc {
+	font-size: 1.2em;
+}
+.l_other {
+	font-size: 0.875em;
+}
+
+/*----------------------------
+	Nice toggle
+-----------------------------*/
+/* The switch - the box around the slider */
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input:checked + .slider {
+	background-color: #2196B3;
+}
+
+input:focus + .slider {
+	box-shadow: 0 0 1px #2196B3;
+}
+
+input:checked + .slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+	border-radius: 34px;
+}
+
+.slider.round:before {
+	border-radius: 50%;
+}
+
+/*----------------------------
+	dashboard Panels
+-----------------------------*/
+.panel-default > .panel-heading-dash {
+	background: #b2dddd; color: #345664;
+}
+/*----------------------------
+	Clickable Panels
+-----------------------------*/
+
+.clickable
+{
+	cursor: pointer;
+}
+
+.clickable .glyphicon
+{
+	background: rgba(0, 0, 0, 0.15);
+	display: inline-block;
+	padding: 6px 12px;
+	border-radius: 4px
+}
+
+.panel-heading span
+{
+	margin-top: -23px;
+	font-size: 15px;
+	margin-right: -9px;
+}
+a.clickable { color: inherit; }
+a.clickable:hover { text-decoration:none; }

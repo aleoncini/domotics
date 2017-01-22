@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Home page of the application">
+    <meta name="author" content="Andrea Leoncini">
+    <link rel="icon" href="favicon.ico">
+
+    <title>Domotics Setup Controller</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-toggle.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/app.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="home.html"><i class="glyphicon glyphicon-chevron-left"></i> Dashboard</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Controller</a></li>
+                <li><a href="setup_terminal.html">Terminal</a></li>
+                <li><a href="setup_zone.html">Zone</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="homediv">
+
+    <div class="container">
+        <button type="button" class="btn btn-primary pull-right" id="add_controller_button">Add Controller</button>
+        <br><br>
+    </div>
+
+    <div id="controller_list"></div>
+
+</div><!-- /.homediv -->
+
+<!-- Modal to add new CONTROLLER -->
+<div id="new_controller_dialog" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Domotics - New Controller</h3>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal" role="form">
+
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label" for="ctrl_descr">Descrizione</label>
+                        <div class="col-sm-10"><input type="text" class="form-control" id="ctrl_descr" placeholder="something like... Master Controller"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label" for="ctrl_ip">IP</label>
+                        <div class="col-sm-10"><input type="text" class="form-control" id="ctrl_ip" placeholder="something like... 192.168.1.100"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label" for="ctrl_type">Type</label>
+                        <div class="col-sm-10">
+                            <select class="selectpicker show-tick form-control" id="ctrl_type" title="Select board type...">
+                                <option>Raspberry3-model_B</option>
+                                <option>Arduino</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-danger" data-dismiss="modal" id="ctrl_cancel">Annulla</button>
+                <button type="submit" class="btn btn-primary" data-dismiss="modal" id="ctrl_accept"><i class="glyphicon glyphicon-ok"></i> Aggiungi al Sistema</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/app.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        loadControllers();
+
+        $("#add_controller_button").click(function(){
+            $('#new_controller_dialog').modal('show');
+        });
+        $("#ctrl_accept").click(function(){
+            saveController();
+        });
+        $(document).on("click", ".removeController", function () {
+            var controllerId = $(this).data('id');
+            deleteController(controllerId);
+        });
+
+    });
+
+</script>
+</body>
+</html>
