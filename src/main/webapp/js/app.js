@@ -1,3 +1,27 @@
+function loadSetup() {
+    var theUrl = '/rs/setup/token';
+    $.ajax({
+        url: theUrl,
+        type: 'GET',
+        dataType: 'json',
+        complete: function(response, status, xhr){
+            console.log(response.responseText);
+            var data = jQuery.parseJSON(response.responseText);
+            formatCloudSetup(data);
+        }
+    })
+}
+function formatCloudSetup(data) {
+    var content = '';
+    if (data.token == "none"){
+        content = '<p class="lead">You still have not requested the token.</p>';
+        content += '<p>Copy the following UUID and paste it in the cloud page.</p>';
+        content += '<pre>' + data.uuid + '</pre>';
+    }else{
+        content = '<p class="lead">The system is already synchronized with cloud setup.</p>';
+    }
+    $('#body_div').html(content);
+}
 function saveController() {
     console.log("=============> save controller");
     var theUrl = '/rs/controller/register';

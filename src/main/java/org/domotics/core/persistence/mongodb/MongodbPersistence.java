@@ -6,6 +6,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
 import org.bson.Document;
+import org.domotics.core.model.CloudSetup;
 import org.domotics.core.model.Controller;
 import org.domotics.core.model.Terminal;
 import org.domotics.core.model.Zone;
@@ -239,6 +240,28 @@ public class MongodbPersistence implements Persistence {
             terminals.add(this.getTerminal(t_uuid));
         }
         return terminals;
+    }
+
+    @Override
+    public CloudSetup getCloudSetup() {
+        CloudSetup setup = new CloudSetup();
+        MongoCollection<Document> collection = db.getCollection("setup");
+        Document document = collection.find().first();
+        if (document != null){
+            setup.setUuid(document.getString("uuid"))
+                    .setToken(document.getString("token"));
+        }
+        return setup;
+    }
+
+    @Override
+    public CloudSetup saveCloudSetup(CloudSetup setup) {
+        Document document = new Document()
+                .append("uuid", setup.getUuid())
+                .append("token", setup.getToken());
+        MongoCollection<Document> collection = db.getCollection("setup");
+        collection.insertOne(document);
+        return setup;
     }
 
 }

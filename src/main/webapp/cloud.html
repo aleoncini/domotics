@@ -42,12 +42,11 @@
     </div>
 </nav>
 
-
 <div class="homediv">
 
     <div class="container">
 
-        <div class="container" id="main_dashboard">
+        <div class="container" id="body_div">
 
         </div>
 
@@ -64,22 +63,8 @@
 <script type="text/javascript">
 
     $(document).ready(function(){
-        loadDashboard();
-
-        $(document).on("click", ".turnTerminalOn", function () {
-            var t_uuid = $(this).data('t-id');
-            setTerminalOn(t_uuid);
-        });
-        $(document).on("click", ".turnTerminalOff", function () {
-            var t_uuid = $(this).data('t-id');
-            setTerminalOff(t_uuid);
-        });
-
+        loadSetup();
     });
-
-    $('.panel-heading span.clickable').click();
-    $('.panel div.clickable').click();
-
 
 </script>
 

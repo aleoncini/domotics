@@ -1,5 +1,6 @@
 package org.domotics.core.persistence;
 
+import org.domotics.core.model.CloudSetup;
 import org.domotics.core.model.Controller;
 import org.domotics.core.model.Terminal;
 import org.domotics.core.model.Zone;
@@ -30,4 +31,7 @@ public interface Persistence {
     public boolean removeAssociation(String uuid, String t_uuid);
     public Collection<Terminal> getAssociatedTerminals(String uuid);
 
+    // Cloud section
+    public CloudSetup getCloudSetup();
+    public CloudSetup saveCloudSetup(CloudSetup setup);
 }
