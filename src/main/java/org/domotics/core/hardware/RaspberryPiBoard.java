@@ -33,9 +33,9 @@ public class RaspberryPiBoard implements Board {
         pins[1]= gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03,"pin_03",PinState.LOW);
         pins[1].setShutdownOptions(true, PinState.LOW);
         pins[2]= gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05,"pin_05", PinState.LOW);
-        pins[3].setShutdownOptions(true, PinState.LOW);
+        pins[2].setShutdownOptions(true, PinState.LOW);
         pins[3]= gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07,"pin_07",PinState.LOW);
-        pins[4].setShutdownOptions(true, PinState.LOW);
+        pins[3].setShutdownOptions(true, PinState.LOW);
 
         for (int i=0; i<4; i++){
             logger.info("==========> [Raspberry Pi Board] GPIO available at pin: " + i + " name: " + pins[i].getName() + " state: " + pins[i].getState());

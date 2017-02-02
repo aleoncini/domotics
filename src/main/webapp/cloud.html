@@ -47,10 +47,12 @@
     <div class="container">
 
         <div class="container" id="body_div">
-
+            <p class="lead">The system is already synchronized with cloud setup.</p>
         </div>
 
     </div>
+
+</div>
 
 </div>
 
@@ -64,6 +66,10 @@
 
     $(document).ready(function(){
         loadSetup();
+
+        $("#ins_token_button").click(function(){
+            saveToken();
+        });
     });
 
 </script>

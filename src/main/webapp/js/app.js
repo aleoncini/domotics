@@ -12,15 +12,42 @@ function loadSetup() {
     })
 }
 function formatCloudSetup(data) {
-    var content = '';
     if (data.token == "none"){
-        content = '<p class="lead">You still have not requested the token.</p>';
+        var content = '<p class="lead">You still have not requested the token.</p>';
         content += '<p>Copy the following UUID and paste it in the cloud page.</p>';
         content += '<pre>' + data.uuid + '</pre>';
-    }else{
-        content = '<p class="lead">The system is already synchronized with cloud setup.</p>';
+        content += '<p>Then paste here the generated token.</p>';
+        content += '<form class="form-horizontal" role="form">';
+        content += '  <input type="hidden" name="setup_uuid" id="cfg_setup_uuid" value="' + data.uuid + '"/>';
+        content += '  <div class="form-group">';
+        content += '    <label  class="col-sm-2 control-label" for="ins_token">synchronization token</label>';
+        content += '    <div class="col-sm-10"><input type="text" class="form-control" id="ins_token" placeholder="paste here the token..."/>';
+        content += '    </div>';
+        content += '  </div>';
+        content += '  <button type="submit" class="btn btn-primary" id="ins_token_button"><i class="glyphicon glyphicon-ok"></i> Save Token</button>';
+        content += '</form>';
+        $('#body_div').html(content);
     }
-    $('#body_div').html(content);
+}
+function saveToken() {
+    console.log("=============> save token");
+    var uuid = $("#cfg_setup_uuid").val();
+    var theUrl = '/rs/setup/register';
+    var stp_data = '{';
+    stp_data += '"uuid":"' + $("#cfg_setup_uuid").val() + '",';
+    stp_data += '"token":"' + $("#ins_token").val() + '"}';
+    console.log(stp_data);
+    $.ajax({
+        url: theUrl,
+        type: 'POST',
+        data: stp_data,
+        contentType :   'application/json',
+        dataType: 'json',
+        complete: function(response, status, xhr){
+            var data = jQuery.parseJSON(response.responseText);
+            console.log("============> saved token: " + data.token);
+        }
+    });
 }
 function saveController() {
     console.log("=============> save controller");

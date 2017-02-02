@@ -1,5 +1,6 @@
 package org.domotics.core.rest;
 
+import org.domotics.core.model.CloudSetup;
 import org.domotics.core.persistence.Persistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
@@ -29,6 +31,15 @@ public class SetupService {
     @Produces("application/json")
     public Response getSetupToken() {
         return Response.ok(persistence.getCloudSetup()).build();
+    }
+
+    @POST
+    @Path("register")
+    @Produces("application/json")
+    public Response saveToken(CloudSetup setup) {
+        CloudSetup saved = persistence.saveCloudSetup(setup);
+        String response = "{ \"token\":\"" + saved.getToken() + "\" }";
+        return Response.ok(response).build();
     }
 
 }
