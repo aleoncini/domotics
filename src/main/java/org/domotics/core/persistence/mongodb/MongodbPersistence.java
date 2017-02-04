@@ -126,7 +126,13 @@ public class MongodbPersistence implements Persistence {
     public boolean deleteTerminal(String uuid) {
         MongoCollection<Document> collection = db.getCollection("terminals");
         DeleteResult result = collection.deleteOne(eq("uuid", uuid));
-        return result.wasAcknowledged();
+        if (!result.wasAcknowledged()){
+            return false;
+        }
+        if (!removeAllAssociation(uuid)){
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -227,6 +233,17 @@ public class MongodbPersistence implements Persistence {
         } catch (Exception e){
             e.printStackTrace();
             return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean removeAllAssociation(String terminal_uuid) {
+        Collection<Zone> zones = getZones();
+        for (Zone zone : zones){
+            if (!removeAssociation(zone.getUuid(),terminal_uuid)){
+                return false;
+            }
         }
         return true;
     }

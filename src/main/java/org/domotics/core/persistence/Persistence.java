@@ -29,6 +29,7 @@ public interface Persistence {
     public Collection<Zone> getZones();
     public boolean associateTerminal(String uuid, String t_uuid);
     public boolean removeAssociation(String uuid, String t_uuid);
+    public boolean removeAllAssociation(String terminal_uuid);
     public Collection<Terminal> getAssociatedTerminals(String uuid);
 
     // Cloud section

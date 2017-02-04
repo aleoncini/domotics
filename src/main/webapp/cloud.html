@@ -30,7 +30,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">domotics.org</a>
+            <a class="navbar-brand" href="index.html">romotica</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -46,13 +46,31 @@
 
     <div class="container">
 
-        <div class="container" id="body_div">
-            <p class="lead">The system is already synchronized with cloud setup.</p>
+        <div class="container" id="wait_div">
+            <p class="lead">Please wait...</p>
+        </div>
+
+        <div class="container" id="sync_div" style="display: none">
+            <p class="lead">Your system is already synchronised.</p>
+        </div>
+
+        <div class="container" id="not_yet_div" style="display: none">
+            <p class="lead">You still haven't requested the token.</p>
+            <p>Copy the following UUID and paste it in the cloud page.</p>
+            <pre id="pre_field_uuid"></pre>
+            <p>Then paste here the generated token.</p>
+            <form class="form-horizontal" role="form">
+                <input type="hidden" name="setup_uuid" id="cfg_setup_uuid" value=""/>
+                <div class="form-group">
+                    <label  class="col-sm-2 control-label" for="ins_token">synchronization token</label>
+                    <div class="col-sm-10"><input type="text" class="form-control" id="ins_token" placeholder="paste here the token..."/>
+                    </div>
+                </div>
+            </form>
+            <button type="submit" class="btn btn-primary pull-right" id="ins_token_button"><i class="glyphicon glyphicon-ok"></i> Save Token</button>
         </div>
 
     </div>
-
-</div>
 
 </div>
 
@@ -66,7 +84,6 @@
 
     $(document).ready(function(){
         loadSetup();
-
         $("#ins_token_button").click(function(){
             saveToken();
         });

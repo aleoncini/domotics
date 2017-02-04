@@ -12,26 +12,18 @@ function loadSetup() {
     })
 }
 function formatCloudSetup(data) {
+    $('#wait_div').fadeOut(400);
     if (data.token == "none"){
-        var content = '<p class="lead">You still have not requested the token.</p>';
-        content += '<p>Copy the following UUID and paste it in the cloud page.</p>';
-        content += '<pre>' + data.uuid + '</pre>';
-        content += '<p>Then paste here the generated token.</p>';
-        content += '<form class="form-horizontal" role="form">';
-        content += '  <input type="hidden" name="setup_uuid" id="cfg_setup_uuid" value="' + data.uuid + '"/>';
-        content += '  <div class="form-group">';
-        content += '    <label  class="col-sm-2 control-label" for="ins_token">synchronization token</label>';
-        content += '    <div class="col-sm-10"><input type="text" class="form-control" id="ins_token" placeholder="paste here the token..."/>';
-        content += '    </div>';
-        content += '  </div>';
-        content += '  <button type="submit" class="btn btn-primary" id="ins_token_button"><i class="glyphicon glyphicon-ok"></i> Save Token</button>';
-        content += '</form>';
-        $('#body_div').html(content);
+        console.log("====> Token still not saved.");
+        $("#cfg_setup_uuid").val(data.uuid);
+        $("#pre_field_uuid").text(data.uuid);
+        $('#not_yet_div').fadeIn(600);
+    } else {
+        $('#sync_div').fadeIn(600);
     }
 }
 function saveToken() {
     console.log("=============> save token");
-    var uuid = $("#cfg_setup_uuid").val();
     var theUrl = '/rs/setup/register';
     var stp_data = '{';
     stp_data += '"uuid":"' + $("#cfg_setup_uuid").val() + '",';
@@ -46,6 +38,7 @@ function saveToken() {
         complete: function(response, status, xhr){
             var data = jQuery.parseJSON(response.responseText);
             console.log("============> saved token: " + data.token);
+            alert("Token: " + data.token + " saved. The system is now synchronised with cloud interface.");
         }
     });
 }
@@ -311,12 +304,15 @@ function loadAssociatedTerminals(z_uuid) {
         }
     })
 }
-function addTerminalsToZoneTable(zone_uuid, data) {
-    $.each(data, function (index, zone) {
-        addTerminalToZoneTable(zone_uuid,zone);
+function addTerminalsToZoneTable(zone_uuid, terminals) {
+    $.each(terminals, function (index, terminal) {
+        addTerminalToZoneTable(zone_uuid,terminal);
     });
 }
 function addTerminalToZoneTable(zone_uuid, data) {
+    if(data.description == "null"){
+        return;
+    }
     var content = '<p id="' + zone_uuid + '_' + data.uuid + '">';
     content += data.description;
     content += ' <a class="removeTerminalAssociation" href="javascript:void()" data-zone-id="' + zone_uuid + '" data-trm-id="' + data.uuid + '"><span class="glyphicon glyphicon-remove-circle"></span><a></p>';
@@ -436,6 +432,10 @@ function addTerminalStatusToDashboard(panel_body_id,terminal_uuid) {
     });
 }
 function formatDashboardTerminalInfo(panel_body_id,terminal_info) {
+    if (terminal_info.description == "null"){
+        return;
+    }
+
     var panel_id = '#' + panel_body_id;
     var content = '<div id="' + terminal_info.uuid + '">';
     content += '<p class="lead">' + terminal_info.description;
