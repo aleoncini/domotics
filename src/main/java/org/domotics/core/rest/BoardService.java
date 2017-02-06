@@ -10,7 +10,7 @@ import javax.inject.Named;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
-@Path("board")
+@Path("gpio")
 public class BoardService {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -27,29 +27,35 @@ public class BoardService {
     @Path("{id}")
     @Produces("application/json")
     public Response getStatus(@PathParam("id") int pinNumber) {
-        Status status = new Status();
-        status.setStatus( board.status(pinNumber) == 1 ? "on" : "off" );
-        status.setValue( board.value(pinNumber) );
+        int statusValue = board.status(pinNumber);
+        Status status = new Status().setResult("success").setGPIO(""+pinNumber).setStatus(""+statusValue);
+        if (statusValue == -1){
+            status.setResult("error");
+        }
         return Response.ok(status).build();
     }
 
-    @POST
+    @GET
     @Path("{id}/on")
     @Produces("application/json")
     public Response setOn(@PathParam("id") int pinNumber) {
-        Status status = new Status();
-        status.setStatus( board.on(pinNumber) == 1 ? "on" : "off" );
-        status.setValue(board.value(pinNumber));
+        int statusValue = board.on(pinNumber);
+        Status status = new Status().setResult("success").setGPIO(""+pinNumber).setStatus(""+statusValue);
+        if (statusValue == -1){
+            status.setResult("error");
+        }
         return Response.ok(status).build();
     }
 
-    @POST
+    @GET
     @Path("{id}/off")
     @Produces("application/json")
     public Response setOff(@PathParam("id") int pinNumber) {
-        Status status = new Status();
-        status.setStatus( board.off(pinNumber) == 1 ? "on" : "off" );
-        status.setValue(board.value(pinNumber));
+        int statusValue = board.off(pinNumber);
+        Status status = new Status().setResult("success").setGPIO(""+pinNumber).setStatus(""+statusValue);
+        if (statusValue == -1){
+            status.setResult("error");
+        }
         return Response.ok(status).build();
     }
 

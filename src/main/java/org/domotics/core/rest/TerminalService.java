@@ -99,6 +99,8 @@ public class TerminalService {
     }
 
     private Status invokeBoard(String id, String action) {
+        Status status = new Status().setResult("error").setStatus("0").setGPIO("0");
+
         Terminal terminal = persistence.getTerminal(id);
 
         if (terminal.getDescription().equals("null")){
@@ -108,20 +110,23 @@ public class TerminalService {
         Controller controller = persistence.getController(terminal.getControllerUuid());
 
         ResteasyClient client = new ResteasyClientBuilder().build();
-        String url = "http://" + controller.getIpAddress() + "/rs/board/" + terminal.getPin();
-        Response response;
+        String url = "http://" + controller.getIpAddress() + "/rs/gpio/" + terminal.getPin();
+        Response response = null;
         if (action != null){
             url = url + "/" + action;
-            ResteasyWebTarget target = client.target(url);
-            response = target.request().post(null);
-        } else {
-            ResteasyWebTarget target = client.target(url);
-            response = target.request().get();
         }
-
-        Status status = response.readEntity(Status.class);
-        response.close();
-
+        ResteasyWebTarget target = client.target(url);
+        try {
+            response = target.request().get();
+            if (response.getStatus() == 200){
+                status = response.readEntity(Status.class);
+                logger.info("=================> status: [" + status.getStatus() + "]");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if (response != null) response.close();
+        }
         return status;
     }
 

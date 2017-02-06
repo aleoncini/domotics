@@ -440,18 +440,25 @@ function formatDashboardTerminalInfo(panel_body_id,terminal_info) {
     var content = '<div id="' + terminal_info.uuid + '">';
     content += '<p class="lead">' + terminal_info.description;
 
-    if(terminal_info.type == 1){  // Sensor Type
-        content += '</p>';
-        content += '<p>Value: <b>' + terminal_info.status.value + '</b></p>';
-    }
+    console.log("=========[" + terminal_info.status.status + "]============");
 
-    if(terminal_info.type == 2){  // Relay Type
-        if(terminal_info.status.status == 'on'){
-            content += '<a class="turnTerminalOff" href="javascript:void()" data-t-id="' + terminal_info.uuid + '"><span class="pull-right "><i class="glyphicon glyphicon-remove-circle"></i></span></a></p>';
-            content += '<p>Status: <b>ON</b></p>';
-        } else {
-            content += '<a class="turnTerminalOn" href="javascript:void()" data-t-id="' + terminal_info.uuid + '"><span class="pull-right "><i class="glyphicon glyphicon-off"></i></span></a></p>';
-            content += '<p>Status: <b>OFF</b></p>';
+    if (terminal_info.status.result == "error"){
+        content += '</p>';
+        content += '<p>terminal unavailable</p>';
+    }else{
+        if(terminal_info.type == 1){  // Sensor Type
+            content += '</p>';
+            content += '<p>Value: <b>' + terminal_info.status.value + '</b></p>';
+        }
+
+        if(terminal_info.type == 2){  // Relay Type
+            if(terminal_info.status.status == '1'){
+                content += '<a class="turnTerminalOff" href="javascript:void()" data-t-id="' + terminal_info.uuid + '"><span class="pull-right "><i class="glyphicon glyphicon-remove-circle"></i></span></a></p>';
+                content += '<p>Status: <b>ON</b></p>';
+            } else {
+                content += '<a class="turnTerminalOn" href="javascript:void()" data-t-id="' + terminal_info.uuid + '"><span class="pull-right "><i class="glyphicon glyphicon-off"></i></span></a></p>';
+                content += '<p>Status: <b>OFF</b></p>';
+            }
         }
     }
 
@@ -470,7 +477,7 @@ function setTerminal(terminal_uuid, cmd) {
     var theUrl = '/rs/terminal/' + terminal_uuid + '/' + cmd;
     $.ajax({
         url: theUrl,
-        type: 'POST',
+        type: 'GET',
         data: {},
         dataType: 'json',
         complete: function(response, status, xhr){
